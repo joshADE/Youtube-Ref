@@ -12,12 +12,15 @@ export const videoSlice = createSlice({
       },
       removeAtIndex: (state, action) => {
         state.videos.splice(action.payload, 1);
+      },
+      editAtIndex: (state, action) => {
+        state.videos.splice(action.payload.index, 1, action.payload.video)
       }
     },
   });
 
 
-  export const { add, removeAtIndex } = videoSlice.actions;
+  export const { add, removeAtIndex, editAtIndex } = videoSlice.actions;
 
   export const selectVideos = state => state.video.videos;
 

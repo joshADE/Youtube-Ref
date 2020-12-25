@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import VidoePlayer from './components/VidoePlayer';
 import VidoeReferencer from './components/VideoReferencer'
-import { HashRouter as Router, Route } from 'react-router-dom';
+import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
 import VideoSearch from './components/VideoSearch';
 import Sidebar from './components/Sidebar';
@@ -18,9 +18,12 @@ const App = () => {
       <div className="App">
         <Sidebar />
         <div className="routes">
-          <Route exact path="/" component={VideoReferences} />
-          <Route path="/edit/:id" component={EditReference} />
-          <Route path="/create" component={CreateReference} />
+          <Switch>
+            <Route exact path="/" component={VideoReferences} />
+            <Route path="/edit/:id" component={EditReference} />
+            <Route path="/create" component={CreateReference} />
+            <Route path="*" component={() => "Page Not Found"} />
+          </Switch>
         </div>
       </div>
     </Router>

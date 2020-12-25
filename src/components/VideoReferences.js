@@ -1,12 +1,15 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { Table, Button } from 'reactstrap'
+import { NavLink } from 'react-router-dom';
 import { getTime } from '../utility'
 import {
-    selectVideos
+    selectVideos,
+    removeAtIndex
 } from '../features/video/videoSlice'
 function VideoReferences() {
     const videos = useSelector(selectVideos);
+    const dispatch = useDispatch();
     return (
         <div className="text-center">
             <h2>Video References</h2>
@@ -25,14 +28,16 @@ function VideoReferences() {
                     </tr>
                 </thead>
                 <tbody>
-                    {videos.map(video => 
+                    {videos.map((video, index) => 
                     <tr key={video.id}>
                         <td>{video.url}</td>
                         <td>{video.name}</td>
                         <td>{getTime(video.startSeconds)}</td>
                         <td>{video.endSeconds?getTime(video.endSeconds):"-:-"}</td>
                         <td>
-
+                            <NavLink to={`/edit/${video.id}`}>Edit</NavLink> 
+                            {' '} | {' '}
+                            <a href="#" onClick={() => dispatch(removeAtIndex(index))}>Delete</a>
                         </td>
                     </tr>)}
                 </tbody>

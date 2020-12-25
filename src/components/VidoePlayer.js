@@ -1,23 +1,22 @@
 import React, { useState, useEffect, useRef } from 'react'
 import Slide from 'rc-slider';
 import 'rc-slider/assets/index.css';
-import { CustomInput, Form, FormGroup, Label, Button } from 'reactstrap';
+import { CustomInput, Button } from 'reactstrap';
 import ReactPlayer from 'react-player';
 import { getTime } from '../utility';
 const { createSliderWithTooltip } = Slide;
 const Slider = createSliderWithTooltip(Slide);
 
 function VideoPlayer({
-    videoURL,
-    startSeconds,
-    endSeconds,
+    video,
     handleVideoEnd,
-    goToNextComponent
+    nextButtonText,
+    nextButtonHandler
 }) {
     const [isPaused, setPaused ] = useState(false);
     const [volume, setVolume] = useState(0.5);
     const [repeat, setRepeat] = useState(false);
-    const [value, setValue] = useState(startSeconds);
+    const [value, setValue] = useState(video.startSeconds);
     const videoRef = useRef();
 
     const [videoDuration, setVideoDuration] = useState(60);
@@ -45,8 +44,8 @@ function VideoPlayer({
     const handleEnd = () => {
         if (repeat){
             if (videoRef.current){
-                videoRef.current.seekTo(startSeconds);
-                setValue(startSeconds);
+                videoRef.current.seekTo(video.startSeconds);
+                setValue(video.startSeconds);
             }
         }else{
             handleVideoEnd();
@@ -68,15 +67,15 @@ function VideoPlayer({
         <div className="player">
             <ReactPlayer
                 className="video" 
-                url={videoURL}
+                url={video.url}
                 width="100%"
                 height="100%"
                 controls={false}
                 playing={!isPaused}
                 config={{
-                    youtube: endSeconds
-                    ? { playerVars: { start: startSeconds, end: endSeconds } } 
-                    : { playerVars: { start: startSeconds } },
+                    youtube: video.endSeconds
+                    ? { playerVars: { start: video.startSeconds, end: video.endSeconds } } 
+                    : { playerVars: { start: video.startSeconds } },
                 }}
                 onProgress={handleProgress}
                 volume={volume}
@@ -93,8 +92,8 @@ function VideoPlayer({
             >{getTime(value)}</span>
             
             <Slider 
-                min={startSeconds}
-                max={endSeconds?endSeconds:videoDuration}
+                min={video.startSeconds}
+                max={video.endSeconds?video.endSeconds:videoDuration}
                 value={value}
                 onChange={handleSliderChange}
                 tipFormatter={val => getTime(val)}
@@ -125,7 +124,7 @@ function VideoPlayer({
                     step={0.1}
                     onChange={handleVolumeChange}
                 />
-                <Button onClick={goToNextComponent} outline color="secondary">Add</Button>
+                <Button onClick={nextButtonHandler} outline color="secondary">{nextButtonText}</Button>
             </div>
         </div>
     )

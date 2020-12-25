@@ -79,11 +79,20 @@
   padding: 10px;
   margin-bottom: 10px;
   width: 100%;
+  background-color: #fff;
 } 
+
+.menu > li:hover {
+  background-color: #aaeeaa;
+}
 
 .menu > li > a {
   text-decoration: none;
   color: grey;
+}
+
+.menu > li > a > span {
+  margin-left: 10px;
 }
 
 .menu-link-current {

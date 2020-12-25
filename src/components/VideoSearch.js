@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router';
 import { Button, Input, Label } from 'reactstrap';
 
 function VideoSearch({
@@ -8,7 +7,6 @@ function VideoSearch({
 }) {
 
     const [url, setURL] = useState('');
-    const history = useHistory();
 
     const handleSubmit = e => {
         e.preventDefault();

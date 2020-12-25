@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { useHistory } from 'react-router';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import { CustomInput, Form, FormGroup, Label, Input, Col } from 'reactstrap';
@@ -12,25 +11,24 @@ const Range = createSliderWithTooltip(Slider.Range);
 
 
 function VideoReferencer({
-    videoURL,
+    video,
     setNewReference,
     handleVideoEnd,
-    goToNextComponent
+    nextButtonText,
+    nextButtonHandler
 }) {
     const [isPaused, setPaused ] = useState(false);
     const [volume, setVolume] = useState(0.5);
     const [repeat, setRepeat] = useState(false);
     const videoRef = useRef();
-    const [referenceType, setReferenceType] = useState('point');
-    const [referenceName, setReferenceName] = useState('');
+    const [referenceType, setReferenceType] = useState(video.endSeconds?'range':'point');
+    const [referenceName, setReferenceName] = useState(video.name?video.name:'');
 
-    const [startPoint, setStartPoint] = useState(0);
+    const [startPoint, setStartPoint] = useState(video.startSeconds ? video.startSeconds : 0);
     
     const [value, setValue] = useState(startPoint);
     const [videoDuration, setVideoDuration] = useState(60);
-    const [endPoint, setEndPoint] = useState(20);
-
-    const history = useHistory();
+    const [endPoint, setEndPoint] = useState(video.endSeconds ? video.endSeconds : 40);
 
     useEffect(() => {
         if (videoRef.current){
@@ -38,6 +36,14 @@ function VideoReferencer({
             setEndPoint(clamp(endPoint, value, videoRef.current.getDuration()));
         }
     })
+
+    useEffect(() => {
+        console.log("start seconds", video.startSeconds);
+        console.log("end seconds", video.endSeconds);
+        console.log("start point", startPoint);
+        console.log("end point", endPoint);
+        
+    }, [endPoint])
     
     
     const handleSubmit = (e) => {
@@ -49,7 +55,7 @@ function VideoReferencer({
         }else{
             return;
         }
-        goToNextComponent();
+        nextButtonHandler();
     }
    
 
@@ -65,6 +71,17 @@ function VideoReferencer({
         setPaused(true);
         
     }
+
+    const handleReady = () => {
+        if (videoRef.current){
+            videoRef.current.seekTo(startPoint);
+            setValue(startPoint);
+        }
+        if (video.endSeconds){
+            setEndPoint(video.endSeconds);
+        }
+    }
+    
     const handleEnd = () => {
         if (repeat){
             if (videoRef.current){
@@ -77,8 +94,12 @@ function VideoReferencer({
     }
 
     const handleSliderChange = (newvalue) => {
-        setStartPoint(newvalue[0]);
-        setValue(newvalue[1]);
+        if (newvalue[0]){
+            setStartPoint(newvalue[0]);
+        }
+        if (newvalue[1]){
+            setValue(newvalue[1]);
+        }
         if (newvalue[2]){
             setEndPoint(newvalue[2]);
         }
@@ -103,7 +124,7 @@ function VideoReferencer({
     const handleTypeChange = (e) => {
         setReferenceType(e.target.value);
         if (e.target.value === 'range'){
-            setEndPoint(value + 5); // endPoint is clamped above
+            setEndPoint(value + videoDuration / 10); // endPoint is clamped above
         }
     }
 
@@ -112,7 +133,7 @@ function VideoReferencer({
         <div className="player">
             <ReactPlayer
                 className="video" 
-                url={videoURL}
+                url={video.url}
                 width="100%"
                 height="100%"
                 controls={false}
@@ -122,6 +143,7 @@ function VideoReferencer({
                 onPlay={handlePlaying}
                 onPause={handlePause}
                 onEnded={handleEnd}
+                onReady={handleReady}
                 ref={videoRef}
             />
             <div
@@ -195,7 +217,7 @@ function VideoReferencer({
                     </FormGroup>
                     <FormGroup check row>
                         <Col sm={{ size: 3, offset: 2 }}>
-                        <Input type="submit" value="Submit"/>
+                        <Input type="submit" value={nextButtonText}/>
                         </Col>
                     </FormGroup>
                 </Form>

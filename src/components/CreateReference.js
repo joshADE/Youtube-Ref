@@ -8,22 +8,20 @@ import VideoPlayer from './VidoePlayer'
 import {
     add
 } from '../features/video/videoSlice'
+import withNavigator from './withNavigator';
 
-function CreateReference() {
+function CreateReference({
+    // from withNavigator HOC
+    currentComponent,
+    goToNextComponent,
+    goToPrevComponent,
+    // other props
+}) {
     const dispatch = useDispatch();
-    const [currentComponent, setCurrentComponenet] = useState(0);
-    const goToNextComponent = () => {
-        if (currentComponent < 3)
-            setCurrentComponenet(currentComponent + 1);
-    }
-    const goToPrevComponent = () => {
-        if (currentComponent > 0)
-            setCurrentComponenet(currentComponent - 1);
-    }
-
+    
     const addVideo = () => {
         dispatch(add({id: uuidv4(), ...videoReference}));
-        setCurrentComponenet(currentComponent + 1);
+        goToNextComponent();
     }
     const [videoReference, setVideoReference] = useState({
         url: '',
@@ -61,16 +59,16 @@ function CreateReference() {
                     goToNextComponent={goToNextComponent}
                 />
                 <VideoReferencer 
-                    videoURL={videoReference.url}
+                    video={videoReference}
                     setNewReference={setNewReference}
-                    goToNextComponent={goToNextComponent}
                     handleVideoEnd={() => {console.log('video ended')}}
+                    nextButtonText="Create"
+                    nextButtonHandler={goToNextComponent}
                 />
                 <VideoPlayer 
-                    videoURL={videoReference.url}
-                    startSeconds={videoReference.startSeconds}
-                    endSeconds={videoReference.endSeconds}
-                    goToNextComponent={addVideo}
+                    video={videoReference}
+                    nextButtonText="Add Video Reference"
+                    nextButtonHandler={addVideo}
                     handleVideoEnd={() => {console.log('video ended')}}
                 />
                 <div className="text-center">
@@ -82,4 +80,4 @@ function CreateReference() {
     )
 }
 
-export default CreateReference
+export default withNavigator(CreateReference, 4);

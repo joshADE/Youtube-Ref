@@ -1,6 +1,7 @@
 import React from 'react'
 import DefaultProfilePhoto from '../assets/profile-photo.jpg'
 import { NavLink } from 'react-router-dom';
+import { SidebarData } from './SidebarData';
 function Sidebar({
 
 }) {
@@ -10,16 +11,16 @@ function Sidebar({
             <ul
                 className="menu navbar-nav"
             >
-                <li className="navbar-item">
-                    <NavLink to="/" className="navbar-link" activeClassName="menu-link-current">
-                        Home
-                    </NavLink>
-                </li>
-                <li className="navbar-item">
-                    <NavLink to="/create" className="navbar-link" activeClassName="menu-link-current">
-                        Create a video reference
-                    </NavLink>
-                </li>
+                {SidebarData.map((item, index) => {
+                    return (
+                        <li key={index} className={`navbar-item ${item.cName}`}>
+                            <NavLink to={item.path} className="navbar-link" activeClassName="menu-link-current">
+                                {item.icon}
+                                <span>{item.title}</span>
+                            </NavLink>
+                        </li>
+                    )
+                })}
             </ul>
         </nav>
     )
