@@ -1,7 +1,7 @@
 import React from 'react'
-import DefaultProfilePhoto from '../assets/profile-photo.jpg'
 import { NavLink, Link } from 'react-router-dom';
 import { SidebarData } from './SidebarData';
+import ProfileDetails from './auth/ProfileDetails';
 
 const isActive = (path, match, location) => !!(match || path === location.pathname);
 function Sidebar({
@@ -25,7 +25,9 @@ function Sidebar({
                     )
                 })}
             </ul>
-            <img src={DefaultProfilePhoto} className="profile-photo" alt="profile photo" />
+
+            
+            <ProfileDetails />
         </nav>
     )
 }

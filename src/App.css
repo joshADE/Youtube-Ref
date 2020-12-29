@@ -174,12 +174,37 @@
   padding: 0;
   font-size: 2vmin;
 }
+.profile-info {
+  border-radius: 20px;
+  background-color: #F6F9FB;
+  margin: 0 auto;
+  min-width: 90%;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  
+}
 
 .profile-photo {
   object-fit: contain;
-  width: 75%;
+  height: 70%;
   max-width: 100px;
   border-radius: 50%;
+  margin: 5% 5%;
+}
+
+.profile-info {
+  width: 50%;
+  overflow: hidden;
+}
+
+.user-name {
+  font-weight: 700;
+}
+
+.user-type {
+  font-size: 10px;
+  color: #c4c4c4;
 }
 
 .menu {
