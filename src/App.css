@@ -1,9 +1,129 @@
+@import url('https://fonts.googleapis.com/css2?family=Audiowide&family=Montserrat&display=swap');
+
 .App {
   width: 100vw;
   height: 100vh;
+  font-size: 2.5vmin;
+  background-color: #fdfffd;
+  display: flex;
+  font-family: 'Montserrat', sans-serif;
+}
+
+
+.title {
+  margin: 0;
+  padding: 1rem;
+  text-align: center;
+  font-family: 'Audiowide', cursive;
+  color: #252c3e;
+  font-size: large;
+}
+
+
+.auth-options {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 25%;
+}
+
+.auth-options button {
+  font-size: 12px;
+  font-weight: 900;
+  border: 1px solid grey;
+  border-radius: 8px;
+  margin: 2.5rem 1rem 0 1rem;
+  color: #F6F9FB;
+  background-color: #252c3e;
+  width: 70%;
+  height: 40px;
+  padding: 2px;
+}
+
+.auth-options button svg {
+  fill: #F6F9FB;
+  stroke-width: 50;
+  margin-right:10%;
+}
+
+
+.auth-options button:hover {
+  background-color: #6579AE;
+}
+
+.error-notice {
+  margin: 1rem 0;
+  padding: 0.5rem;
+  border-radius: 8px;
+  border: 1px solid #e07c7c;
+  background-color: rgb(223, 182, 182);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.error-notice button {
+  background-color: #7e4444;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: #fff;
+}
+
+.page {
+  max-width: 400px;
+  margin: auto;
+
+}
+
+.form label,
+.form input {
+  display: block;
+}
+
+.form input {
+  margin-bottom: 1rem;
+}
+
+.form label {
+  margin-bottom: 0.2rem;
+}
+
+.form input[type="text"],
+.form input[type="email"],
+.form input[type="password"] {
+  width: 100%;
+  padding: 0.3rem;
+  font-size: 1.1rem;
+  background-color: #c2c2c2;
+  border-radius: 8px;
+  border: 1px solid #cacaca
+}
+
+.form input:focus {
+  outline: none;
+  border: 1px solid #2682ee;
+  box-shadow: inser 0px 0px 10px #2682ee;
+}
+
+.form input[type="submit"] {
+  border: 1px solid #6aa851;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  background-color: #6aa851;
+}
+
+
+
+
+.main-content{
+  width: 100%;
+  height: 90%;
   display: flex;
   align-items: stretch;
   justify-content: stretch;
+
 }
 
 .player{
@@ -46,14 +166,12 @@
 }
 
 .sidebar {
-  width: 20%;
-  background-color: darkslategray;
-  border-radius: 5px;
+  width: 25%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  padding: 2%;
+  justify-content: space-between;
+  padding: 0;
   font-size: 2vmin;
 }
 
@@ -62,11 +180,9 @@
   width: 75%;
   max-width: 100px;
   border-radius: 50%;
-  
 }
 
 .menu {
-  padding-top: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -74,40 +190,52 @@
 }
 
 .menu > li {
+  text-align: center;
   border-radius: 10px;
-  border: 1px solid grey;
-  padding: 10px;
-  margin-bottom: 10px;
-  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 2rem;
+  width: 75%;
   background-color: #fff;
 } 
 
 .menu > li:hover {
-  background-color: #aaeeaa;
+  background-color: #E1FCE7;
 }
 
 .menu > li > a {
   text-decoration: none;
-  color: grey;
+  color: #c4c4c4;
 }
 
 .menu > li > a > span {
   margin-left: 10px;
+
 }
 
 .menu-link-current {
-  color: #fff;
+  color: #252c3e !important;
 }
 
 .routes {
   width: 100%;
+  overflow: hidden;
+}
+
+.inner {
+  width: 100%;
+  height: 100%;
+  background-color: #f6f9fb;
+  border-radius: 20px 20px 0 0;
+  margin-top: 50px;
+  padding: 2rem;
+  overflow: auto;
+  max-height: calc(100% - 50px);
+}
+
+.inner > * {
   height: 100%;
 }
 
-.routes > * {
-  width: 100%;
-  height: 100%;
-}
 
 .navigator {
   height: 80%;
