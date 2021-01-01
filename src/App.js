@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import axios from './axios';
+import React, { useEffect } from 'react';
+import {  useDispatch } from 'react-redux';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import './App.css';
@@ -11,46 +10,12 @@ import CreateReference from './components/CreateReference';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import AuthOptions from './components/auth/AuthOptions';
-import { changeUser, selectUserData } from './features/user/userSlice';
+import { loadUser } from './features/user/userSlice';
 const App = () => {
 
   const dispatch = useDispatch();
-  const userData = useSelector(selectUserData);
   useEffect(() => {
-    const checkLoggedIn = async () => {
-      let token = localStorage.getItem('auth-token');
-      if (token === null){
-        localStorage.setItem('auth-token', '');
-        token = '';
-      }else{
-        console.log('token was', token);
-      }
-      const tokenRes = await axios.post(
-        '/users/tokenIsValid',
-        null,
-        { headers: {"x-auth-token": token } }
-      );
-      console.log(tokenRes.data);
-      if(tokenRes.data){
-        const userRes = await axios.get(
-          '/users/', 
-        { 
-          headers: {"x-auth-token": token}
-        });
-
-        console.log(userRes.data);
-        dispatch(changeUser({
-          token,
-          user: userRes.data,
-        }))
-        
-        console.log(userData);
-      }
-
-      
-    }
-
-    checkLoggedIn();
+      dispatch(loadUser());
   }, [])
 
 

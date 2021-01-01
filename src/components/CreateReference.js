@@ -1,12 +1,11 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
-import { v4 as uuidv4 } from 'uuid';
 import ComponentNavigator from './ComponentNavigator'
 import VideoReferencer from './VideoReferencer'
 import VideoSearch from './VideoSearch'
 import VideoPlayer from './VidoePlayer'
 import {
-    add
+    addVideoAsync
 } from '../features/video/videoSlice'
 import withNavigator from './withNavigator';
 
@@ -20,7 +19,7 @@ function CreateReference({
     const dispatch = useDispatch();
     
     const addVideo = () => {
-        dispatch(add({id: uuidv4(), ...videoReference}));
+        dispatch(addVideoAsync(videoReference));
         goToNextComponent();
     }
     const [videoReference, setVideoReference] = useState({

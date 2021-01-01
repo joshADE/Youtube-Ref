@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import axios from '../../axios';
-import { changeUser } from '../../features/user/userSlice';
+import { selectAllUserData, register } from '../../features/user/userSlice';
+import { selectAllErrorData, clearErrors } from '../../features/error/errorSlice';
 import ErrorNotice from '../misc/ErrorNotice';
 function Register() {
+    const { isAuthenticated } = useSelector(selectAllUserData);
+    const { msg, status, id} = useSelector(selectAllErrorData);
+
     const dispatch = useDispatch();
     const history = useHistory();
     const [email, setEmail] = useState('');
@@ -21,41 +24,35 @@ function Register() {
         lastname: '',
         username: ''
     });
+
+    useEffect(() => {
+        if(id === 'REGISTER_FAIL'){
+           setError(msg.errors); 
+        }else{
+            setError({
+                email: '',
+                password: '',
+                firstname: '',
+                lastname: '',
+                username: ''
+            });
+        }
+        if(isAuthenticated){
+            history.push('/');
+        }
+    },[msg, status, id, isAuthenticated]);
+
     const submit = async (e) => {
         e.preventDefault();
         setMessage('');
-
+        dispatch(clearErrors());
         if (password !== passwordConfirm){
             setMessage('Passwords do not match');
             return;
         }
-        try{
-            const newUser = { email, password, firstname, lastname, username};
-            const registerRes = await axios.post(
-                '/users/register',
-                newUser
-            );
 
-            const loginRes = await axios.post(
-                '/users/login',
-                {
-                    email,
-                    password,
-                }
-            );
-
-            dispatch(changeUser({
-                token: loginRes.data.token,
-                user: loginRes.data.user
-            }))
-
-            localStorage.setItem('auth-token', loginRes.data.token);
-            history.push('/');
-        }catch(err){
-            
-            (err.response.data.errors && setError(err.response.data.errors));
-            
-        }
+        const newUser = { email, password, firstname, lastname, username};
+        dispatch(register(newUser))
     }
     
     return (

@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import ComponentNavigator from './ComponentNavigator';
 import VideoReferencer from './VideoReferencer';
 import withNavigator from './withNavigator';
-import { selectVideos, editAtIndex } from '../features/video/videoSlice';
+import { selectVideos, editVideoAsync } from '../features/video/videoSlice';
 
 
 function EditReference({
@@ -31,14 +31,11 @@ function EditReference({
     const video = videos[videoIndex];
 
     const setNewReference = (newName, newStartSeconds, newEndSeconds = null) => {
-        dispatch(editAtIndex({
-            index: videoIndex, 
-            video: {
-                ...video,
-                name: newName,
-                startSeconds: newStartSeconds,
-                endSeconds: newEndSeconds
-            }
+        dispatch(editVideoAsync(id,{
+            ...video,
+            name: newName,
+            startSeconds: newStartSeconds,
+            endSeconds: newEndSeconds
         }));
     }
     return (

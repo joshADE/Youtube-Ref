@@ -1,15 +1,21 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Table, Button } from 'reactstrap'
 import { NavLink } from 'react-router-dom';
 import { getTime } from '../utility'
 import {
     selectVideos,
-    removeAtIndex
+    getAllUserVideosAsync,
+    deleteVideoAsync
 } from '../features/video/videoSlice'
 function VideoReferences() {
     const videos = useSelector(selectVideos);
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getAllUserVideosAsync());
+    }, [])
+
     return (
         <div className="text-center">
             <h2>Video References</h2>
@@ -37,7 +43,7 @@ function VideoReferences() {
                         <td>
                             <NavLink to={`/edit/${video.id}`}>Edit</NavLink> 
                             {' '} | {' '}
-                            <a href="#" onClick={() => dispatch(removeAtIndex(index))}>Delete</a>
+                            <a href="#" onClick={() => dispatch(deleteVideoAsync(video.id))}>Delete</a>
                         </td>
                     </tr>)}
                 </tbody>

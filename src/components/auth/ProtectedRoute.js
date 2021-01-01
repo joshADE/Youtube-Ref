@@ -1,10 +1,10 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { selectUserData } from '../../features/user/userSlice';
+import { selectAllUserData } from '../../features/user/userSlice';
 
 const ProtectedRoute = ({ component: Component, ...rest }) => {
-    const { user } = useSelector(selectUserData);
+    const { user } = useSelector(selectAllUserData);
     return (
     <Route {...rest} render={(props) => (
        user ? 

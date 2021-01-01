@@ -1,12 +1,16 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import axios from '../../axios';
-import { changeUser } from '../../features/user/userSlice';
+import { login, selectAllUserData } from '../../features/user/userSlice';
+import { selectAllErrorData, clearErrors } from '../../features/error/errorSlice';
+
 import ErrorNotice from '../misc/ErrorNotice';
 function Login() {
     const dispatch = useDispatch();
     const history = useHistory();
+    const { isAuthenticated } = useSelector(selectAllUserData);
+    const { msg, status, id} = useSelector(selectAllErrorData);
+
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -16,34 +20,34 @@ function Login() {
         email: '',
         password: ''
     });
-        const submit = async (e) => {
-        e.preventDefault();
-        setMessage('');
-        try{
-            const loginUser = { email, password };
-            const loginRes = await axios.post(
-                '/users/login',
-                loginUser
-            );
 
-            dispatch(changeUser({
-                token: loginRes.data.token,
-                user: loginRes.data.user
-            }))
-
-            localStorage.setItem('auth-token', loginRes.data.token);
-            history.push('/');
-        }catch(err){
-            
-            (err.response.data.errors && setError(err.response.data.errors));
-            
+    useEffect(() => {
+        if(id === 'LOGIN_FAIL'){
+           setError(msg.errors); 
+        }else{
+            setError({
+                email: '',
+                password: ''
+            });
         }
-    }
+        if(isAuthenticated){
+            history.push('/');
+        }
+    },[msg, status, id, isAuthenticated]);
+
+        const submit = (e) => {
+            e.preventDefault();
+            setMessage('');
+            dispatch(clearErrors());
+            
+            const loginUser = { email, password };
+            dispatch(login(loginUser));
+        }
     return (
        <div className="page">
             <h2>Log In</h2>
             <form className="form" onSubmit={submit}>
-                <span class="error">{message}</span>
+                <span className="error">{message}</span>
                 <label htmlFor="login-email">Email</label>
                 <input id="login-email" type="email" onChange={(e) => setEmail(e.target.value)} value={email} />
                 {error.email && (<ErrorNotice message={error.email} clearError={() => setError({...error, email: undefined})} />)}
