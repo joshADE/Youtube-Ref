@@ -5,5 +5,11 @@ export function formatTime(time) {
     return time < 10 ? "0" + time : "" + time;
 }
 export function getTime(time) {
-    return `${Math.floor(time / 60)}:${formatTime(Math.floor(time) % 60)}`;
+    const hours = Math.floor(time / 3600);
+    const min = Math.floor(time / 60 % 60);
+    const sec = Math.floor(time % 60);
+    if (hours === 0)
+    return `${min}:${formatTime(sec)}`;
+    else
+    return `${hours}:${formatTime(min)}:${formatTime(sec)}`;
 }

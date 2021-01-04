@@ -216,7 +216,7 @@ function VideoReferencer({
                         </Col>
                     </FormGroup>
                     <FormGroup check row>
-                        <Col sm={{ size: 3, offset: 2 }}>
+                        <Col sm={{ size: 5, offset: 2 }}>
                         <Input type="submit" value={nextButtonText}/>
                         </Col>
                     </FormGroup>

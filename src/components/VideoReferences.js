@@ -41,6 +41,8 @@ function VideoReferences() {
                         <td>{getTime(video.startSeconds)}</td>
                         <td>{video.endSeconds?getTime(video.endSeconds):"-:-"}</td>
                         <td>
+                            <NavLink to={`/play/${video.id}`}>Play</NavLink> 
+                            {' '} | {' '}
                             <NavLink to={`/edit/${video.id}`}>Edit</NavLink> 
                             {' '} | {' '}
                             <a href="#" onClick={() => dispatch(deleteVideoAsync(video.id))}>Delete</a>

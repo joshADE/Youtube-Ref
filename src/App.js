@@ -11,6 +11,7 @@ import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import AuthOptions from './components/auth/AuthOptions';
 import { loadUser } from './features/user/userSlice';
+import PlayReference from './components/PlayReference';
 const App = () => {
 
   const dispatch = useDispatch();
@@ -30,6 +31,7 @@ const App = () => {
                 <ProtectedRoute exact path="/" component={VideoReferences} />
                 <ProtectedRoute path="/edit/:id" component={EditReference} />
                 <ProtectedRoute path="/create" component={CreateReference} />
+                <ProtectedRoute path="/play/:id" component={PlayReference} />
                 <Route path="/login" component={Login} />
                 <Route path="/register" component={Register} />
                 <Route path="*" component={() => "Page Not Found"} />
