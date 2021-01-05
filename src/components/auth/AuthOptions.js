@@ -5,6 +5,7 @@ import * as AiIcons from 'react-icons/ai';
 import { selectAllUserData } from '../../features/user/userSlice';
 import { logoutSuccess } from '../../features/user/userSlice';
 function AuthOptions({
+    setSideBarOpen
 }) {
     const userData = useSelector(selectAllUserData);
     const dispatch = useDispatch();
@@ -16,6 +17,7 @@ function AuthOptions({
     }
     return (
         <nav className="auth-options">
+            <AiIcons.AiOutlineMenu className="open-menu" onClick={() => setSideBarOpen(true)}/>
             {userData.user ? (
                 <button onClick={logoutUser}><AiIcons.AiOutlineLogout />Log out</button>
                 ) : (

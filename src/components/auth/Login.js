@@ -35,12 +35,16 @@ function Login() {
         if(isAuthenticated){
             history.push('/');
         }
+        
     },[msg, status, id, isAuthenticated]);
 
+    useEffect(() => {
+        return dispatch(clearErrors());
+    },[])
         const submit = (e) => {
             e.preventDefault();
             setMessage('');
-            dispatch(clearErrors());
+            
             
             const loginUser = { email, password };
             dispatch(login(loginUser));

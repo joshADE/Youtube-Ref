@@ -42,10 +42,14 @@ function Register() {
         }
     },[msg, status, id, isAuthenticated]);
 
+    useEffect(() => {
+        return dispatch(clearErrors());
+    },[])
+    
     const submit = async (e) => {
         e.preventDefault();
         setMessage('');
-        dispatch(clearErrors());
+        
         if (password !== passwordConfirm){
             setMessage('Passwords do not match');
             return;

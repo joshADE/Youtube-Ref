@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {  useDispatch } from 'react-redux';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import ProtectedRoute from './components/auth/ProtectedRoute';
@@ -19,12 +19,18 @@ const App = () => {
       dispatch(loadUser());
   }, [])
 
-
+  const [sideBarOpen, setSideBarOpen] = useState(false);
+  const getClasses = () => {
+    if (sideBarOpen)
+        return "App open";
+    else 
+        return "App"; 
+  }
   return (
     <Router>
-      <div className="App">
+      <div className={getClasses()}>
         
-        <Sidebar />
+        <Sidebar setSideBarOpen={setSideBarOpen} />
           <div className="routes">
             <div className="inner">
               <Switch>
@@ -38,7 +44,7 @@ const App = () => {
               </Switch>
             </div>
           </div>
-          <AuthOptions />
+          <AuthOptions setSideBarOpen={setSideBarOpen}/>
         </div>
       
     </Router>

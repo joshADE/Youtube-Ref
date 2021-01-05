@@ -19,6 +19,10 @@
   font-size: large;
 }
 
+.close-menu, 
+.open-menu {
+    display: none;
+}
 
 .auth-options {
   display: flex;
@@ -37,6 +41,7 @@
   color: #F6F9FB;
   background-color: #252c3e;
   width: 70%;
+  max-width: 150px;
   height: 40px;
   padding: 2px;
 }
@@ -61,12 +66,15 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-size: small;
 }
 
 .error-notice button {
   background-color: #7e4444;
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
+  
+  border: 1px solid #fff;
   border-radius: 50%;
   color: #fff;
 }
@@ -103,15 +111,15 @@
 
 .form input:focus {
   outline: none;
-  border: 1px solid #2682ee;
-  box-shadow: inser 0px 0px 10px #2682ee;
+  border: 1px solid #abe2fb;
+  box-shadow: inset 0px 0px 5px #abe2fb;
 }
 
 .form input[type="submit"] {
   border: 1px solid #6aa851;
   border-radius: 8px;
   font-size: 1.1rem;
-  background-color: #6aa851;
+  background-color: #E1FCE7;
 }
 
 
@@ -173,6 +181,8 @@
   justify-content: space-between;
   padding: 0;
   font-size: 2vmin;
+  transition: all 1s ease;
+  z-index: 1;
 }
 .profile-info {
   border-radius: 20px;
@@ -264,4 +274,64 @@
 
 .navigator {
   height: 80%;
+}
+
+@media screen and (max-width: 600px) {
+  .App {
+    display: block;
+    height: 100%;
+  }
+  .close-menu, 
+  .open-menu {
+    display: block;
+    font-size: large;
+  }
+  .open-menu {
+    margin-right: auto;
+  }
+  .close-menu {
+    margin: 10px 0 0 10px;
+  }
+  .auth-options {
+    position: absolute;
+    top: 0;
+    left: 0;
+    flex-direction: row;
+    justify-content: center;
+    height: 50px;
+    width: 100%;
+    padding: 1rem;
+  }
+  .auth-options button {
+    margin-top: 0;
+  }
+  .routes {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    padding: 0 10px;
+  }
+  .sidebar {
+    position: absolute;
+    top: 0;
+    left: -200px;
+    width: 200px;
+    min-height: 100vh;
+    background-color: #fff;
+    border-radius: 0 20px 20px 0;
+  }
+
+  .profile-info {
+    margin-bottom: 20px;
+  }
+  .open .sidebar {
+    left: 0;
+    box-shadow: 5px 0 1000px grey;
+  }
+
+  .open .routes,
+  .open .auth-options {
+    filter: blur(0.5px);
+  }
 }
