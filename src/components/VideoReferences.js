@@ -1,15 +1,16 @@
-import React, { useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { Table, Button } from 'reactstrap'
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Table, Button, Spinner } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 import { getTime } from '../utility'
 import {
     selectVideos,
+    selectVideoData,
     getAllUserVideosAsync,
     deleteVideoAsync
 } from '../features/video/videoSlice'
 function VideoReferences() {
-    const videos = useSelector(selectVideos);
+    const { isLoading, videos } = useSelector(selectVideoData);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -50,7 +51,8 @@ function VideoReferences() {
                     </tr>)}
                 </tbody>
             </Table>}
-            {videos.length === 0 && <span>There are no video references to display</span>}
+            {isLoading && <Spinner color="secondary" />}
+            {!isLoading && videos.length === 0 && <span>There are no video references to display</span>}
         </div>
     )
 }

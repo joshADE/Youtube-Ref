@@ -120,5 +120,5 @@ export const deleteVideoAsync = (videoId) => async (dispatch, getState) => {
 }
 
   export const selectVideos = state => state.video.videos;
-
+  export const selectVideoData = state => state.video;
   export default videoSlice.reducer;

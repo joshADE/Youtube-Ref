@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
-import { CustomInput, Form, FormGroup, Label, Input, Col } from 'reactstrap';
+import { CustomInput, Form, FormGroup, Label, Input, Col, Button } from 'reactstrap';
 import ReactPlayer from 'react-player';
 import { getTime, clamp } from '../utility'
 const { createSliderWithTooltip } = Slider;
@@ -189,14 +189,17 @@ function VideoReferencer({
                         checked={repeat}
                         onChange={() => setRepeat(!repeat)}
                     />
-                    <Slider 
-                        className="volumeSlider"
-                        min={0}
-                        max={1}
-                        value={volume}
-                        step={0.1}
-                        onChange={handleVolumeChange}
-                    />
+                    <FormGroup check>
+                        <Label sm={2}>Volume</Label>
+                        <Slider 
+                            className="volumeSlider"
+                            min={0}
+                            max={1}
+                            value={volume}
+                            step={0.1}
+                            onChange={handleVolumeChange}
+                        />
+                    </FormGroup>
                     <FormGroup check>
                         <Label check>
                             <Input onChange={handleTypeChange} value="point" checked={referenceType === 'point'} type="radio" name="referenceType" />{' '}
@@ -211,10 +214,37 @@ function VideoReferencer({
                     </FormGroup>
                     <FormGroup row>
                         <Label for="referenceName" sm={2}>Name</Label>
-                        <Col sm={5}>
+                        <Col sm={10}>
                             <Input type="text" name="referenceName" value={referenceName} onChange={(e) => setReferenceName(e.target.value)} id="referenceName" placeholder="Enter the reference name here" required/>
                         </Col>
                     </FormGroup>
+                    <FormGroup row style={{ maxWidth: '450px'}}>
+                        <Col sm={2}>
+                            SP: {getTime(startPoint)}
+                        </Col>
+                        <Col style={{ maxWidth: '200px'}} sm={5}>
+                            <Button onClick={() => setStartPoint(value)} outline color="secondary">Set start point to current played point</Button>
+                        </Col>
+                        <Col style={{ maxWidth: '200px'}} sm={5}>
+                            <Button onClick={() => setStartPoint(0)} outline color="secondary">Set start point to beginning</Button>
+                        </Col>
+                    </FormGroup>
+                    {referenceType === 'range' &&
+                    <FormGroup row style={{ maxWidth: '450px'}}>
+                        <Col sm={2}>
+                            EP: {getTime(endPoint)}
+                        </Col>
+                        <Col style={{ maxWidth: '200px'}} sm={5}>
+                            <Button onClick={() => setEndPoint(value)} outline color="secondary">Set end point to current played point</Button>
+                        </Col>
+                        <Col style={{ maxWidth: '200px'}} sm={5}>
+                            <Button onClick={() => setEndPoint(videoDuration)} outline color="secondary">Set end point to end</Button>
+                        </Col>
+                    </FormGroup>
+                    }
+
+                    
+                    
                     <FormGroup check row>
                         <Col sm={{ size: 5, offset: 2 }}>
                         <Input type="submit" value={nextButtonText}/>

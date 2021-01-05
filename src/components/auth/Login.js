@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { Spinner } from 'reactstrap';
 import { login, selectAllUserData } from '../../features/user/userSlice';
 import { selectAllErrorData, clearErrors } from '../../features/error/errorSlice';
 
 import ErrorNotice from '../misc/ErrorNotice';
+import AuthOptions from './AuthOptions';
 function Login() {
     const dispatch = useDispatch();
     const history = useHistory();
-    const { isAuthenticated } = useSelector(selectAllUserData);
+    const { isAuthenticated, isLoading } = useSelector(selectAllUserData);
     const { msg, status, id} = useSelector(selectAllErrorData);
 
 
@@ -46,6 +48,7 @@ function Login() {
     return (
        <div className="page">
             <h2>Log In</h2>
+            {isLoading && <Spinner color="secondary" />}
             <form className="form" onSubmit={submit}>
                 <span className="error">{message}</span>
                 <label htmlFor="login-email">Email</label>
