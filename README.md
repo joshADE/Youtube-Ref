@@ -1,3 +1,45 @@
+# Youtube-Ref-Frontend
+> The front end React Redux Toolkit app for Youtube-Ref. See the backend code [here](https://github.com/joshADE/Youtube-Ref-Backend)
+
+# Technologies used
+* [React JS](https://reactjs.org/) (Javascript Library)
+* [Redux](https://redux.js.org/) (State Container)
+* [Redux Toolkit](https://redux-toolkit.js.org/) (Package to help in Redux development)
+
+# Requirements
+
+* NPM (version 7.x and above)
+* GIT (version 2.x and above)
+
+# Getting Started
+
+## Clone Repository
+
+Clone the repository to your computer.
+
+
+```
+git clone https://github.com/joshADE/Youtube-Ref-Frontend.git
+```
+
+## Installation
+
+1. cd to the project directory.
+2. run `npm install` to install dependencies.
+
+```
+npm install
+```
+
+## Setup Axios
+Inside the src folder, edit axios.js and change the baseURL property to the url of the backend server.
+
+```
+const instance = axios.create({
+    baseURL: '(your url here)'
+})
+```
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
 
 ## Available Scripts
