@@ -4,6 +4,7 @@ import 'rc-slider/assets/index.css';
 import { CustomInput, Form, FormGroup, Label, Input, Col, Button } from 'reactstrap';
 import ReactPlayer from 'react-player';
 import { getTime, clamp } from '../utility'
+import VolumeIndicator from './misc/VolumeIndicator';
 const { createSliderWithTooltip } = Slider;
 const Range = createSliderWithTooltip(Slider.Range);
 
@@ -190,7 +191,11 @@ function VideoReferencer({
                         onChange={() => setRepeat(!repeat)}
                     />
                     <FormGroup check>
-                        <Label sm={2}>Volume</Label>
+                        <VolumeIndicator 
+                            min={0}
+                            max={1}
+                            value={volume}
+                        />
                         <Slider 
                             className="volumeSlider"
                             min={0}
@@ -200,18 +205,21 @@ function VideoReferencer({
                             onChange={handleVolumeChange}
                         />
                     </FormGroup>
+                    <br />
                     <FormGroup check>
                         <Label check>
                             <Input onChange={handleTypeChange} value="point" checked={referenceType === 'point'} type="radio" name="referenceType" />{' '}
                             Reference Point
                         </Label>
                     </FormGroup>
+                    <br />
                     <FormGroup check>
                         <Label check>
                             <Input onChange={handleTypeChange} value="range" checked={referenceType === 'range'} type="radio" name="referenceType" />{' '}
                             Reference Range
                         </Label>
                     </FormGroup>
+                    <br />
                     <FormGroup row>
                         <Label for="referenceName" sm={2}>Name</Label>
                         <Col sm={10}>

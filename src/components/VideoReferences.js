@@ -1,58 +1,84 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Table, Button, Spinner } from 'reactstrap';
-import { NavLink } from 'react-router-dom';
-import { getTime } from '../utility'
+import { Spinner } from 'reactstrap';
+import { DragDropContext } from 'react-beautiful-dnd';
+
+
 import {
-    selectVideos,
+
     selectVideoData,
     getAllUserVideosAsync,
-    deleteVideoAsync
+
 } from '../features/video/videoSlice'
+import CollectionGrouping from './CollectionGrouping';
+import { 
+    selectCollectionData, 
+    getAllUserCollectionsFullAsync,
+    moveVideoAsync,
+    
+} from '../features/collection/collectionSlice';
 function VideoReferences() {
-    const { isLoading, videos } = useSelector(selectVideoData);
+    const { isLoading: isVideoLoading } = useSelector(selectVideoData);
+    const { isLoading: isCollectionLoading, collections } = useSelector(selectCollectionData);
     const dispatch = useDispatch();
+
 
     useEffect(() => {
         dispatch(getAllUserVideosAsync());
+        dispatch(getAllUserCollectionsFullAsync());
     }, [])
+
+    const handleDragEnd = (param) => {
+        //console.log(param);
+        const { source, destination, draggableId } = param;
+        if (!destination){
+            return;
+        }
+        let { droppableId: fromCollection, index: fromIndex } = source;
+        let { droppableId: toCollection, index: toIndex } = destination;
+
+        if (fromCollection === 'null'){
+            fromCollection = null;
+        } 
+        if (toCollection === 'null'){
+            toCollection = null;
+        }
+        let payload = {
+            fromCollection,
+            fromIndex,
+            toCollection,
+            toIndex
+        }
+
+        //console.log(fromCollection, toCollection, draggableId);
+
+        dispatch(moveVideoAsync(draggableId, payload));
+
+        // payload = {
+        //     ...payload,
+        //     videoId: draggableId
+        // }
+        // dispatch(moveVideo(payload));
+        // dispatch(moveVideoInCollection(payload));
+    }
 
     return (
         <div className="text-center">
             <h2>Video References</h2>
-            {videos.length > 0 &&
-            <Table
-                size="sm"
-                striped
+            <DragDropContext
+                onDragEnd={handleDragEnd}
             >
-                <thead>
-                    <tr>
-                        <th>URL</th>
-                        <th>Name</th>
-                        <th>Start</th>
-                        <th>End</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {videos.map((video, index) => 
-                    <tr key={video.id}>
-                        <td>{video.url}</td>
-                        <td>{video.name}</td>
-                        <td>{getTime(video.startSeconds)}</td>
-                        <td>{video.endSeconds?getTime(video.endSeconds):"-:-"}</td>
-                        <td>
-                            <NavLink to={`/play/${video.id}`}>Play</NavLink> 
-                            {' '} | {' '}
-                            <NavLink to={`/edit/${video.id}`}>Edit</NavLink> 
-                            {' '} | {' '}
-                            <a href="#" onClick={() => dispatch(deleteVideoAsync(video.id))}>Delete</a>
-                        </td>
-                    </tr>)}
-                </tbody>
-            </Table>}
-            {isLoading && <Spinner color="secondary" />}
-            {!isLoading && videos.length === 0 && <span>There are no video references to display</span>}
+            {collections.map(collection => (
+                (collection.videos &&
+                <CollectionGrouping 
+                    key={collection.id}
+                    collection={collection}
+                    videos={collection.videos}
+                    //videos.filter(vid => vid.collectionId === collection.id)
+                />)
+            ))}
+            </DragDropContext>
+            {(isCollectionLoading || isVideoLoading) && <Spinner color="secondary" />}
         </div>
     )
 }

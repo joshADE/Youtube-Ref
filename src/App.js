@@ -12,6 +12,7 @@ import Register from './components/auth/Register';
 import AuthOptions from './components/auth/AuthOptions';
 import { loadUser } from './features/user/userSlice';
 import PlayReference from './components/PlayReference';
+import ManageCollections from './components/ManageCollections';
 const App = () => {
 
   const dispatch = useDispatch();
@@ -38,6 +39,7 @@ const App = () => {
                 <ProtectedRoute path="/edit/:id" component={EditReference} />
                 <ProtectedRoute path="/create" component={CreateReference} />
                 <ProtectedRoute path="/play/:id" component={PlayReference} />
+                <ProtectedRoute path="/collections" component={ManageCollections} />
                 <Route path="/login" component={Login} />
                 <Route path="/register" component={Register} />
                 <Route path="*" component={() => "Page Not Found"} />

@@ -29,12 +29,27 @@ export const videoSlice = createSlice({
       },
       startLoading: state => {
         state.isLoading = true;
+      },
+      moveVideo: (state, { payload }) => {
+        const { fromCollection, fromIndex, toCollection, toIndex, videoId } = payload;
+        const indexInUnalteredState = state.videos.findIndex(video => video.id === videoId);
+        if (indexInUnalteredState > -1){
+          state.videos[indexInUnalteredState].collectionId = toCollection;
+  
+          const videosInToCollection = state.videos.filter(video => video.collectionId === toCollection);
+          const videosNotInToCollection = state.videos.filter(video => video.collectionId !== toCollection);
+          //newCourses[params.termI].splice(params.courseI, 0, newCourses[currentItem.termI].splice(currentItem.courseI, 1)[0]);
+          const index = videosInToCollection.findIndex(video => video.id === videoId);
+
+          videosInToCollection.splice(toIndex, 0, videosInToCollection.splice(index, 1)[0]);
+          state.videos = [...videosInToCollection, ...videosNotInToCollection];
+        }
       }
     },
   });
 
 
-  export const { add, replaceAllVideos, removeVideo, editVideo, startLoading } = videoSlice.actions;
+  export const { add, replaceAllVideos, removeVideo, editVideo, startLoading, moveVideo } = videoSlice.actions;
 
   const headers = (token) => ({
     headers: {"x-auth-token": token }

@@ -13,3 +13,7 @@ export function getTime(time) {
     else
     return `${hours}:${formatTime(min)}:${formatTime(sec)}`;
 }
+
+export const getColorAsString = (colorRGBA) => (
+    `rgba(${colorRGBA.r}, ${colorRGBA.g}, ${colorRGBA.b}, ${colorRGBA.a})`
+);

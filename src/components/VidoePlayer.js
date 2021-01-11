@@ -4,6 +4,7 @@ import 'rc-slider/assets/index.css';
 import { CustomInput, Button } from 'reactstrap';
 import ReactPlayer from 'react-player';
 import { getTime } from '../utility';
+import VolumeIndicator from './misc/VolumeIndicator';
 const { createSliderWithTooltip } = Slide;
 const Slider = createSliderWithTooltip(Slide);
 
@@ -116,6 +117,11 @@ function VideoPlayer({
                     checked={repeat}
                     onChange={() => setRepeat(!repeat)}
                 />
+                <VolumeIndicator 
+                    min={0}
+                    max={1}
+                    value={volume}
+                />
                 <Slider 
                     className="volumeSlider"
                     min={0}
@@ -124,6 +130,7 @@ function VideoPlayer({
                     step={0.1}
                     onChange={handleVolumeChange}
                 />
+                <br />
                 <Button onClick={nextButtonHandler} outline color="secondary">{nextButtonText}</Button>
             </div>
         </div>
