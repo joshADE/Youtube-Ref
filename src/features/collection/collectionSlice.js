@@ -42,12 +42,18 @@ export const collectionSlice = createSlice({
           0,
           state.collections[fromColIndex].videos.splice(vidIndex, 1)[0]
         );
+      },
+      deleteVideoInCollection: (state, { payload }) => {
+        state.collections = state.collections.map(col => ({
+          ...col,
+          videos: col.videos.filter(vid => vid.id !== payload.id)
+        }));
       }
     },
   });
 
 
-  export const { add, replaceAllCollections, removeCollection, editCollection, startLoading, moveVideoInCollection } = collectionSlice.actions;
+  export const { add, replaceAllCollections, removeCollection, editCollection, startLoading, moveVideoInCollection, deleteVideoInCollection } = collectionSlice.actions;
 
   const headers = (token) => ({
     headers: {"x-auth-token": token }

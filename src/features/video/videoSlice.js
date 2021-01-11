@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import axios from '../../axios';
 import { getTokenFromUserReducer } from '../user/userSlice';
 import { getErrors } from '../error/errorSlice';
+import { deleteVideoInCollection } from '../collection/collectionSlice';
 export const videoSlice = createSlice({
     name: 'video',
     initialState: {
@@ -122,6 +123,7 @@ export const deleteVideoAsync = (videoId) => async (dispatch, getState) => {
       headers(getTokenFromUserReducer(getState))
     ); 
     dispatch(removeVideo(updatedVideo.data));
+    dispatch(deleteVideoInCollection(updatedVideo.data));
   }catch (err) {
     console.log(err);
     if(err.response){

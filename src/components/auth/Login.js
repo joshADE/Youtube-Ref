@@ -13,9 +13,9 @@ function Login() {
     const { isAuthenticated, isLoading } = useSelector(selectAllUserData);
     const { msg, status, id} = useSelector(selectAllErrorData);
 
-
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    // demo account
+    const [email, setEmail] = useState('test@email.com');
+    const [password, setPassword] = useState('123456');
     const [message, setMessage] = useState('');
 
     const [error, setError] = useState({

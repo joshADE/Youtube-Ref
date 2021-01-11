@@ -18,7 +18,7 @@ import {
     
 } from '../features/collection/collectionSlice';
 function VideoReferences() {
-    const { isLoading: isVideoLoading } = useSelector(selectVideoData);
+    const { isLoading: isVideoLoading, videos } = useSelector(selectVideoData);
     const { isLoading: isCollectionLoading, collections } = useSelector(selectCollectionData);
     const dispatch = useDispatch();
 
@@ -74,7 +74,7 @@ function VideoReferences() {
                     key={collection.id}
                     collection={collection}
                     videos={collection.videos}
-                    //videos.filter(vid => vid.collectionId === collection.id)
+                    //videosConfirm={videos.filter(vid => vid.collectionId === collection.id)}
                 />)
             ))}
             </DragDropContext>
