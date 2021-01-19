@@ -31,6 +31,9 @@ export const collectionSlice = createSlice({
       startLoading: state => {
         state.isLoading = true;
       },
+      stopLoading: state => {
+        state.isLoading = false;
+      },
       moveVideoInCollection: (state, { payload }) => {
         const { fromCollection, fromIndex, toCollection, toIndex, videoId } = payload;
         const fromColIndex = state.collections.findIndex(col => col.id === fromCollection);
@@ -42,6 +45,7 @@ export const collectionSlice = createSlice({
           0,
           state.collections[fromColIndex].videos.splice(vidIndex, 1)[0]
         );
+        state.isLoading = false;
       },
       deleteVideoInCollection: (state, { payload }) => {
         state.collections = state.collections.map(col => ({
@@ -53,7 +57,7 @@ export const collectionSlice = createSlice({
   });
 
 
-  export const { add, replaceAllCollections, removeCollection, editCollection, startLoading, moveVideoInCollection, deleteVideoInCollection } = collectionSlice.actions;
+  export const { add, replaceAllCollections, removeCollection, editCollection, startLoading, stopLoading, moveVideoInCollection, deleteVideoInCollection } = collectionSlice.actions;
 
   const headers = (token) => ({
     headers: {"x-auth-token": token }
@@ -89,6 +93,7 @@ export const collectionSlice = createSlice({
       dispatch(replaceAllCollections(userCollections.data));
     }catch (err) {
       console.log(err);
+      dispatch(stopLoading());
       if(err.response){
         dispatch(getErrors({
           msg: err.response.data,
@@ -109,6 +114,7 @@ export const collectionSlice = createSlice({
       dispatch(replaceAllCollections(userCollections.data));
     }catch (err) {
       console.log(err);
+      dispatch(stopLoading());
       if(err.response){
         dispatch(getErrors({
           msg: err.response.data,
@@ -160,7 +166,7 @@ export const deleteCollectionAsync = (collectionId) => async (dispatch, getState
 
 export const moveVideoAsync = (videoId, payload) => async (dispatch, getState) => {
     try{
-
+      dispatch(startLoading());
       const updateResult = await axios.put(
         '/collections/move/' + videoId,
         payload,
@@ -171,6 +177,7 @@ export const moveVideoAsync = (videoId, payload) => async (dispatch, getState) =
       dispatch(moveVideoInCollection(payload));
     }catch (err) {
       console.log(err);
+      dispatch(stopLoading());
       if(err.response){
         dispatch(getErrors({
           msg: err.response.data,

@@ -31,7 +31,9 @@ function CollectionGrouping({
                     <span className="group-title">{collection.name}</span>
                     {(collection.name === 'Uncategorized') && <span>*The order of videos isn't saved</span>}
                     <span className="group-actions">
-                        <BsIcons.BsPlayFill />
+                        <NavLink style={{color: getColorAsString(JSON.parse(collection.color)) }} to={`/play/collection/${collection.id}`}>
+                            <BsIcons.BsPlayFill />
+                        </NavLink>
                     </span>
                 </div>
             

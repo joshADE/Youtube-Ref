@@ -391,3 +391,55 @@
   width: 20px;
   border: 1px solid gainsboro;
 }
+
+.play-list .player {
+  height: 70%;
+}
+
+.play-list-control {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #6579ae;
+  border-radius: 5px;
+  color: #fff;
+  height: 7%;
+}
+
+.play-list-control .disabled{
+  color: #c4c4c4;
+}
+
+
+.video-play-list {
+  width: 70%;
+  padding: 1px;
+  overflow: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.vid {
+  width: 200px;
+  border-radius: 5px;
+  background-color: rgba(229, 236, 254, 0.52);
+  margin: 5px;
+  padding: 5px;
+  width: 33%;
+  font-size: 1.5vmin;
+  height: 50%;
+  overflow: hidden;
+  width: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.5s ease;
+}
+
+.vid.current {
+  background-color: #252c3e;
+  height: 75%;
+  width: 35%;
+}

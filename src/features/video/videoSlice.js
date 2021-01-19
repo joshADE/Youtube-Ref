@@ -31,6 +31,9 @@ export const videoSlice = createSlice({
       startLoading: state => {
         state.isLoading = true;
       },
+      stopLoading: state => {
+        state.isLoading = false;
+      },
       moveVideo: (state, { payload }) => {
         const { fromCollection, fromIndex, toCollection, toIndex, videoId } = payload;
         const indexInUnalteredState = state.videos.findIndex(video => video.id === videoId);
@@ -50,7 +53,7 @@ export const videoSlice = createSlice({
   });
 
 
-  export const { add, replaceAllVideos, removeVideo, editVideo, startLoading, moveVideo } = videoSlice.actions;
+  export const { add, replaceAllVideos, removeVideo, editVideo, startLoading, stopLoading, moveVideo } = videoSlice.actions;
 
   const headers = (token) => ({
     headers: {"x-auth-token": token }
@@ -86,6 +89,7 @@ export const videoSlice = createSlice({
       dispatch(replaceAllVideos(userVideos.data));
     }catch (err) {
       console.log(err);
+      dispatch(stopLoading());
       if(err.response){
         dispatch(getErrors({
           msg: err.response.data,

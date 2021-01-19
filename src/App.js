@@ -13,6 +13,7 @@ import AuthOptions from './components/auth/AuthOptions';
 import { loadUser } from './features/user/userSlice';
 import PlayReference from './components/PlayReference';
 import ManageCollections from './components/ManageCollections';
+import PlayCollection from './components/PlayCollection';
 const App = () => {
 
   const dispatch = useDispatch();
@@ -38,6 +39,7 @@ const App = () => {
                 <ProtectedRoute exact path="/" component={VideoReferences} />
                 <ProtectedRoute path="/edit/:id" component={EditReference} />
                 <ProtectedRoute path="/create" component={CreateReference} />
+                <ProtectedRoute path="/play/collection/:id" component={PlayCollection} />
                 <ProtectedRoute path="/play/:id" component={PlayReference} />
                 <ProtectedRoute path="/collections" component={ManageCollections} />
                 <Route path="/login" component={Login} />
