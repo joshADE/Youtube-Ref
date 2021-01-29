@@ -135,8 +135,10 @@
 }
 
 .player{
-  height: 100%;
+  height: 90%;
   display: grid;
+  grid-template-rows: 10em 10em 5em;
+  gap: 10px;
   grid-template-areas: 
   "video video controls"
   "video video controls"
@@ -147,6 +149,7 @@
 
 @media screen and (max-width: 760px){
   .player {
+    grid-template-rows: 20em 5em 15em;
     grid-template-areas: 
     "video"
     "track"
@@ -166,7 +169,7 @@
 
 .controls{
   grid-area: controls;
-  padding: 10px;
+  padding: 20px;
 }
 
 .volume-indicator {
@@ -367,6 +370,7 @@
 
 .video-action {
   color: grey;
+  cursor: pointer;
 }
 
 .video-action:hover{
@@ -389,9 +393,6 @@
   border: 1px solid gainsboro;
 }
 
-.play-list .player {
-  height: 70%;
-}
 
 .play-list-control {
   display: flex;
@@ -403,8 +404,13 @@
   height: 7%;
 }
 
+.play-list-navigator {
+  cursor: pointer;
+}
+
 .play-list-control .disabled{
   color: #c4c4c4;
+  cursor: default;
 }
 
 

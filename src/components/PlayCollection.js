@@ -55,7 +55,7 @@ function PlayCollection() {
                 nextButtonHandler={goToPrevVideo}
             />}
             <div className="play-list-control">
-                <IoIcons.IoChevronBack onClick={goToPrevVideo} className={`${index === 0?'disabled':''}`}/>
+                <IoIcons.IoChevronBack onClick={goToPrevVideo} className={`play-list-navigator ${index === 0?'disabled':''}`}/>
                 {videos.length > 0 ?
                 <div className="video-play-list">
                     {videos
@@ -67,7 +67,7 @@ function PlayCollection() {
                         :null
                     )}
                 </div> : <div>There are no videos in this collection</div>}
-                <IoIcons.IoChevronForward onClick={goToNextVideo} className={`${index >= videos.length - 1?'disabled':''}`}/>
+                <IoIcons.IoChevronForward onClick={goToNextVideo} className={`play-list-navigator ${index >= videos.length - 1?'disabled':''}`}/>
             </div>
         </div>
     )
